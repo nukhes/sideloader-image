@@ -23,15 +23,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 RUN ARCH=$(uname -m) && \
-    if [ "$ARCH" = "x86_64" ]; then \
-        BIN_NAME="sideloader-gtk-x86_64-linux-gnu"; \
-    elif [ "$ARCH" = "aarch64" ]; then \
-        BIN_NAME="sideloader-gtk-aarch64-linux-gnu"; \
-    else \
-        echo "$ARCH not supported"; exit 1; \
-    fi && \
-    LATEST_URL=$(wget -qO- https://github.com/nukhes/sideloader-image/releases/latest | grep -Eo "/nukhes/sideloader-image/releases/download/[0-9a-f]+/$BIN_NAME") && \
-    wget -O sideloader-linux-gnu "https://github.com$LATEST_URL" && \
+    if [ "$ARCH" = "x86_64" ]; then BIN="sideloader-gtk-x86_64-linux-gnu"; \
+    elif [ "$ARCH" = "aarch64" ]; then BIN="sideloader-gtk-aarch64-linux-gnu"; \
+    else echo "$ARCH not supported"; exit 1; fi && \
+    wget -O sideloader-linux-gnu "https://github.com/nukhes/sideloader-image/releases/download/35f486c/$BIN" && \
     chmod +x sideloader-linux-gnu
 
 ENTRYPOINT ["./sideloader-linux-gnu"]
