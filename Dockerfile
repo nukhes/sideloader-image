@@ -2,9 +2,8 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
-    unzip \
     libgtk-3-0 \
     libgdk-pixbuf2.0-0 \
     libnotify4 \
@@ -25,7 +24,8 @@ RUN apt-get update && apt-get install -y \
     libcairo2 \
     libatk1.0-0 \
     libepoxy0 \
-    && rm -rf /var/lib/apt/lists/*
+    libplist3 \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
