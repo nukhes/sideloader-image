@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y \
     libgtk-3-0 \
     libgdk-pixbuf2.0-0 \
     libnotify4 \
+    libadwaita-1-0 \
+    libharfbuzz-gobject0 \
+    libglib2.0-0 \
     libnss3 \
     libxss1 \
     libxtst6 \
@@ -18,7 +21,10 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglx-mesa0 \
     mesa-vulkan-drivers \
-    libadwaita-1-0 \
+    libpango1.0-0 \
+    libcairo2 \
+    libatk1.0-0 \
+    libepoxy0 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
