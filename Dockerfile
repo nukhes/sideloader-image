@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglx-mesa0 \
     mesa-vulkan-drivers \
+    libadwaita-1-0 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
