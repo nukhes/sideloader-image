@@ -1,6 +1,7 @@
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
@@ -21,8 +22,16 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-RUN wget -O sideloader-gtk-x86_64-linux-gnu.zip "https://github.com/Dadoum/Sideloader/actions/runs/17197829616/artifacts/3839906922"
-RUN unzip sideloader-gtk-x86_64-linux-gnu.zip
-RUN chmod +x sideloader-gtk-x86_64-linux-gnu/sideloader-gtk-x86_64-linux-gnu
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then \
+        BIN_NAME="sideloader-gtk-x86_64-linux-gnu"; \
+    elif [ "$ARCH" = "aarch64" ]; then \
+        BIN_NAME="sideloader-gtk-aarch64-linux-gnu"; \
+    else \
+        echo "$ARCH not supported"; exit 1; \
+    fi && \
+    LATEST_URL=$(wget -qO- https://github.com/nukhes/sideloader-image/releases/latest | grep -Eo "/nukhes/sideloader-image/releases/download/[0-9a-f]+/$BIN_NAME") && \
+    wget -O sideloader-linux-gnu "https://github.com$LATEST_URL" && \
+    chmod +x sideloader-linux-gnu
 
-ENTRYPOINT ["./sideloader-gtk-x86_64-linux-gnu/sideloader-gtk-x86_64-linux-gnu"]
+ENTRYPOINT ["./sideloader-linux-gnu"]
