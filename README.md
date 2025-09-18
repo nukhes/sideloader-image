@@ -9,6 +9,11 @@ get latest image.
 docker pull ghcr.io/nukhes/sideloader-image:latest
 ```
 
+setup xorg permission.
+```bash
+xhost +local:root
+```
+
 run it.
 ```bash
 docker run --rm -it \
