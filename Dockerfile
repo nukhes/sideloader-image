@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libatk1.0-0 \
     libepoxy0 \
     libplist3 \
+    ca-certificates \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -33,7 +34,7 @@ RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "x86_64" ]; then BIN="sideloader-gtk-x86_64-linux-gnu"; \
     elif [ "$ARCH" = "aarch64" ]; then BIN="sideloader-gtk-aarch64-linux-gnu"; \
     else echo "$ARCH not supported"; exit 1; fi && \
-    wget -O sideloader-linux-gnu "https://github.com/nukhes/sideloader-image/releases/download/35f486c/$BIN" && \
+    wget -O sideloader-linux-gnu "https://github.com/nukhes/sideloader-image/releases/download/35f486c/$BIN" || exit 1 && \
     chmod +x sideloader-linux-gnu
 
 ENTRYPOINT ["./sideloader-linux-gnu"]
