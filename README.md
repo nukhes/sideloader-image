@@ -17,7 +17,12 @@ xhost +local:root
 run it.
 ```bash
 docker run --rm -it \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    ghcr.io/nukhes/sideloader-image:latest
+  --device /dev/ttyUSB0:/dev/ttyUSB0 \
+  --device /dev/ttyACM0:/dev/ttyACM0 \
+  --cap-add=SYS_ADMIN \
+  --cap-add=NET_RAW \
+  --user root \
+  -e DISPLAY="$DISPLAY" \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  ghcr.io/nukhes/sideloader-image:latest
 ```
